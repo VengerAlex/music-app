@@ -1,8 +1,11 @@
+import Player from "./component/Player";
+import Song from "./component/Song";
 
 const App = (props) => {
     return (
         <>
-            <h1>Hello</h1>
+            <Song/>
+            <Player />
         </>
     )
 }
