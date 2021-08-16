@@ -13,15 +13,18 @@ const Player = () => {
             <div className="play-conrol">
                 <FontAwesomeIcon
                     className='skip-back'
+                    size='2x'
                     icon={faAngleLeft}
                 />
                 <FontAwesomeIcon
                     className='play'
+                    size='4x'
                     icon={faPlay}
                 />
                 <FontAwesomeIcon
                     className='skip-forward'
                     icon={faAngleRight}
+                    size='2x'
                 />
             </div>
         </div>
