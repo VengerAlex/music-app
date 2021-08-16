@@ -7,13 +7,19 @@ import Song from "./component/Song";
 
 
 const App = (props) => {
+    const [isPlaying, setIsPlaying] = useState(false);
     const [songs, setSongs] = useState(data());
-    const [currentSong, setCurrentSong] = useState(songs[2])
+    const [currentSong, setCurrentSong] = useState(songs[3]);
 
     return (
         <>
-            <Song currentSong={currentSong}/>
-            <Player currentSong={currentSong} />
+            <Song
+                currentSong={currentSong}/>
+            <Player
+                currentSong={currentSong}
+                isPlaying={isPlaying}
+                setIsPlaying={setIsPlaying}
+            />
         </>
     )
 }
