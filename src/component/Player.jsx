@@ -1,12 +1,12 @@
 import React, {useRef, useState} from 'react';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faPlay, faAngleLeft, faAngleRight} from "@fortawesome/free-solid-svg-icons";
+import {faPlay, faAngleLeft, faAngleRight, faPause} from "@fortawesome/free-solid-svg-icons";
 
 const Player = ({currentSong, isPlaying, setIsPlaying}) => {
     const audioRef = useRef(null);
     const [songInfo, setSongInfo] = useState({
-        currentTime: null,
-        duration: null
+        currentTime: 0,
+        duration: 0
     })
 
     const getTimeHandler = (time) => {
@@ -35,6 +35,12 @@ const Player = ({currentSong, isPlaying, setIsPlaying}) => {
             duration
         })
     }
+    const dragHandler = (e) => {
+        audioRef.current.currentTime = e.target.value;
+        setSongInfo({...songInfo, currentTime: e.target.value})
+    }
+
+    console.log(isPlaying)
 
 
     return (
@@ -42,6 +48,7 @@ const Player = ({currentSong, isPlaying, setIsPlaying}) => {
             <div className="time-conrol">
                 <p>{getTimeHandler(songInfo.currentTime)}</p>
                 <input
+                    onChange={dragHandler}
                     min={0}
                     max={songInfo.duration}
                     value={songInfo.currentTime}
@@ -58,8 +65,7 @@ const Player = ({currentSong, isPlaying, setIsPlaying}) => {
                 <FontAwesomeIcon
                     onClick={playSongHandler}
                     className='play'
-                    size='4x'
-                    icon={faPlay}
+                    size='4x' icon={isPlaying ? faPause : faPlay}
                 />
                 <FontAwesomeIcon
                     className='skip-forward'

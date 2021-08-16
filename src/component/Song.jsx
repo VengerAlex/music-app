@@ -1,4 +1,6 @@
 import React from 'react';
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faPause} from "@fortawesome/free-solid-svg-icons";
 
 const Song = ({currentSong}) => {
     return (
@@ -16,3 +18,4 @@ const Song = ({currentSong}) => {
 };
 
 export default Song;
+
