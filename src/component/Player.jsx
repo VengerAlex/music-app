@@ -61,14 +61,17 @@ const Player = ({setSongs, setCurrentSong,songs, setSongInfo,currentSong, isPlay
         <div className='player'>
             <div className="time-conrol">
                 <p>{getTimeHandler(songInfo.currentTime)}</p>
-                <input
-                    onChange={dragHandler}
-                    min={0}
-                    max={songInfo.duration ? (songInfo.duration) : '0:0'}
-                    value={songInfo.currentTime}
-                    type="range"
-                />
-                <p>{getTimeHandler(songInfo.duration)}</p>
+                <div className="track">
+                    <input
+                        onChange={dragHandler}
+                        min={0}
+                        max={songInfo.duration}
+                        value={songInfo.currentTime}
+                        type="range"
+                    />
+                    <div className="animate-track"></div>
+                </div>
+                <p>{songInfo.duration ? (getTimeHandler(songInfo.duration)) : '0:0'}</p>
             </div>
             <div className="play-conrol">
                 <FontAwesomeIcon
