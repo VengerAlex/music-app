@@ -47,6 +47,7 @@ const App = (props) => {
                 audioRef={audioRef}
                 setSongInfo={setSongInfo}
                 songInfo={songInfo}
+                setSongs={setSongs}
             />
             <Library
                 libraryStatus={libraryStatus}

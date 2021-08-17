@@ -1,8 +1,9 @@
-import React, {useRef, useState} from 'react';
+import React, {useRef, useState, useEffect} from 'react';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPlay, faAngleLeft, faAngleRight, faPause} from "@fortawesome/free-solid-svg-icons";
+import {playAudio} from "../util";
 
-const Player = ({setCurrentSong,songs, setSongInfo,currentSong, isPlaying, setIsPlaying, audioRef, songInfo}) => {
+const Player = ({setSongs, setCurrentSong,songs, setSongInfo,currentSong, isPlaying, setIsPlaying, audioRef, songInfo}) => {
 
     const getTimeHandler = (time) => {
         return (
@@ -28,11 +29,33 @@ const Player = ({setCurrentSong,songs, setSongInfo,currentSong, isPlaying, setIs
         let currentIndex = songs.findIndex((song) => song.id === currentSong.id);
 
         if(direction === 'skip-forward'){
-            setCurrentSong(songs[currentIndex + 1])
-        }else{
-            setCurrentSong(songs[currentIndex - 1])
+            setCurrentSong(songs[(currentIndex + 1)  % songs.length])
+        }else if(direction === 'skip-back'){
+            if((currentIndex - 1) % songs.length === -1){
+                setCurrentSong(songs[songs.length - 1])
+                playAudio(isPlaying, audioRef);
+                return;
+            }
+            setCurrentSong(songs[(currentIndex - 1)  % songs.length])
         }
+        playAudio(isPlaying, audioRef);
     }
+
+    useEffect(() => {
+        const newSongs = songs.map(song => {
+            if(song.id === currentSong.id){
+                return{
+                    ...song, active: true
+                }
+            }else{
+                return {
+                    ...song,
+                    active: false
+                }
+            }
+        })
+        setSongs(newSongs);
+    }, [currentSong])
 
     return (
         <div className='player'>
@@ -41,7 +64,7 @@ const Player = ({setCurrentSong,songs, setSongInfo,currentSong, isPlaying, setIs
                 <input
                     onChange={dragHandler}
                     min={0}
-                    max={songInfo.duration || 0}
+                    max={songInfo.duration ? (songInfo.duration) : '0:0'}
                     value={songInfo.currentTime}
                     type="range"
                 />
