@@ -40,6 +40,7 @@ const App = (props) => {
                 songInfo={songInfo}
             />
             <Library
+                setSongs={setSongs}
                 songs={songs}
                 setCurrentSong={setCurrentSong}
                 audioRef={audioRef}
