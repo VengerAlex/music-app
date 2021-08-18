@@ -1,7 +1,6 @@
 import React, {useRef, useState, useEffect} from 'react';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPlay, faAngleLeft, faAngleRight, faPause} from "@fortawesome/free-solid-svg-icons";
-import {playAudio} from "../util";
 
 const Player = ({setSongs, setCurrentSong,songs, setSongInfo,currentSong, isPlaying, setIsPlaying, audioRef, songInfo}) => {
 
@@ -25,20 +24,20 @@ const Player = ({setSongs, setCurrentSong,songs, setSongInfo,currentSong, isPlay
         audioRef.current.currentTime = e.target.value;
         setSongInfo({...songInfo, currentTime: e.target.value})
     }
-    const skipTractHandler = direction => {
+    const skipTractHandler = async (direction) => {
         let currentIndex = songs.findIndex((song) => song.id === currentSong.id);
 
         if(direction === 'skip-forward'){
-            setCurrentSong(songs[(currentIndex + 1)  % songs.length])
+            await setCurrentSong(songs[(currentIndex + 1)  % songs.length])
         }else if(direction === 'skip-back'){
             if((currentIndex - 1) % songs.length === -1){
                 setCurrentSong(songs[songs.length - 1])
-                playAudio(isPlaying, audioRef);
+                if(isPlaying) audioRef.current.play()
                 return;
             }
             setCurrentSong(songs[(currentIndex - 1)  % songs.length])
         }
-        playAudio(isPlaying, audioRef);
+        if(isPlaying) audioRef.current.play()
     }
 
     const trackAnim = {
@@ -65,7 +64,8 @@ const Player = ({setSongs, setCurrentSong,songs, setSongInfo,currentSong, isPlay
         <div className='player'>
             <div className="time-conrol">
                 <p>{getTimeHandler(songInfo.currentTime)}</p>
-                <div className="track" style={{background:
+                <div className="track"
+                        style={{background:
                         `linear-gradient(to right, 
                         ${currentSong.color[0]},
                         ${currentSong.color[1]})`}} >
