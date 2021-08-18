@@ -41,6 +41,10 @@ const Player = ({setSongs, setCurrentSong,songs, setSongInfo,currentSong, isPlay
         playAudio(isPlaying, audioRef);
     }
 
+    const trackAnim = {
+        transform : `translateX(${songInfo.anumationsPercantage}%)`
+    }
+
     useEffect(() => {
         const newSongs = songs.map(song => {
             if(song.id === currentSong.id){
@@ -61,7 +65,10 @@ const Player = ({setSongs, setCurrentSong,songs, setSongInfo,currentSong, isPlay
         <div className='player'>
             <div className="time-conrol">
                 <p>{getTimeHandler(songInfo.currentTime)}</p>
-                <div className="track">
+                <div className="track" style={{background:
+                        `linear-gradient(to right, 
+                        ${currentSong.color[0]},
+                        ${currentSong.color[1]})`}} >
                     <input
                         onChange={dragHandler}
                         min={0}
@@ -69,7 +76,7 @@ const Player = ({setSongs, setCurrentSong,songs, setSongInfo,currentSong, isPlay
                         value={songInfo.currentTime}
                         type="range"
                     />
-                    <div className="animate-track"></div>
+                    <div className="animate-track" style={trackAnim}></div>
                 </div>
                 <p>{songInfo.duration ? (getTimeHandler(songInfo.duration)) : '0:0'}</p>
             </div>
