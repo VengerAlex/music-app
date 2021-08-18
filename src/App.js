@@ -37,13 +37,13 @@ const App = (props) => {
     }
     const songEndHandler = async () => {
         let currentIndex = songs.findIndex((song) => song.id === currentSong.id);
-        await setCurrentSong(songs[(currentIndex + 1)  % songs.length]);
-        if(isPlaying) audioRef.current.play()
+        await setCurrentSong(songs[(currentIndex + 1) % songs.length]);
+        if (isPlaying) audioRef.current.play()
     }
 
 
     return (
-        <>
+        <div className={`app ${libraryStatus ? 'library-active' : ''}`}>
             <Nav
                 libraryStatus={libraryStatus}
                 setLibraryStatus={setLibraryStatus}
@@ -76,7 +76,8 @@ const App = (props) => {
                 src={currentSong.audio}
                 onEnded={songEndHandler}
             ></audio>
-        </>
+        </div>
+
     )
 }
 
